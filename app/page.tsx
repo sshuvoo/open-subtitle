@@ -1,3 +1,3 @@
 export default function Home() {
-   return <h1>Hello Open Subtitle</h1>
+   return <div className="dark:text-white">This is home</div>
 }
