@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import Header from '@/components/header'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,7 +17,10 @@ interface Children {
 export default function RootLayout({ children }: Readonly<Children>) {
    return (
       <html lang="en" className="dark">
-         <body className={`${inter.className} dark:bg-black`}>{children}</body>
+         <body className={`${inter.className} dark:bg-black`}>
+            <Header />
+            {children}
+         </body>
       </html>
    )
 }

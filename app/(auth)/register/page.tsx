@@ -15,9 +15,9 @@ export default function SignupFormDemo() {
    }
 
    return (
-      <div className="flex min-h-screen items-center">
-         <div className="mx-auto w-full max-w-md rounded-none bg-white p-4 shadow-input dark:bg-black md:rounded-2xl md:p-8 lg:max-w-xl">
-            <h2 className="dark:text-primary text-xl font-bold text-neutral-800">
+      <div>
+         <div className="mx-auto w-full max-w-md rounded-none bg-white p-4 shadow-input dark:bg-black md:rounded-2xl md:p-8 lg:max-w-xl mt-4 md:mt-8 xl:mt-12">
+            <h2 className="text-xl font-bold text-neutral-800 dark:text-primary">
                Contribute to Open Subtitle
             </h2>
             <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
