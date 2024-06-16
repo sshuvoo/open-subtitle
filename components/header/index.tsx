@@ -11,9 +11,13 @@ export default async function Header() {
       <div className="border-b border-slate-100/20 dark:text-slate-200">
          <div className="container flex h-20 items-center justify-between">
             <div>
-               <h1 className="text-4xl font-extralight text-primary">OS</h1>
+               <Link href="/" className="text-4xl font-extralight text-primary">
+                  OS
+               </Link>
             </div>
-            <SearchBar />
+            <div className="hidden md:block">
+               <SearchBar />
+            </div>
             <div className="flex items-center gap-3">
                {session?.user?.image && (
                   <div className="overflow-hidden rounded-full border-2 border-primary">
@@ -48,6 +52,9 @@ export default async function Header() {
                   </Link>
                )}
             </div>
+         </div>
+         <div className="container mb-4 md:hidden">
+            <SearchBar />
          </div>
       </div>
    )
