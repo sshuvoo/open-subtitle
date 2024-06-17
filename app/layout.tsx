@@ -17,7 +17,9 @@ interface Children {
 export default function RootLayout({ children }: Readonly<Children>) {
    return (
       <html lang="en" className="dark">
-         <body className={`${inter.className} dark:bg-black`}>
+         <body
+            className={`${inter.className} dark:bg-black dark:text-[#afafaf]`}
+         >
             <Header />
             {children}
          </body>

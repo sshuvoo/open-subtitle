@@ -6,7 +6,7 @@ export const searchMovies = async (formData: FormData) => {
    try {
       if (query_term) {
          const response = await fetch(
-            `${process.env.LIST_MOVIES_API}?query_term=${query_term}&limit=6`
+            `${process.env.LIST_MOVIES_API}?query_term=${query_term}&limit=10`
          )
          const json = await response.json()
          if (json.status === 'ok') {

@@ -29,7 +29,9 @@ export const SearchBar = () => {
    const modalRef = useClickOutside(isOpen, () => setIsOpen(false))
 
    const handleSearch = useDebounce((e: ChangeEvent<HTMLInputElement>) => {
-      e.target.form?.requestSubmit()
+      if (e.target.value) {
+         e.target.form?.requestSubmit()
+      }
    }, 1000)
 
    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -60,13 +62,14 @@ export const SearchBar = () => {
                   initial="hidden"
                   animate="visible"
                   exit="hidden"
-                  className="bg-secondary absolute top-16 z-[1000] w-full divide-y divide-white/5 rounded p-2"
+                  className="absolute top-14 z-[1000] max-h-[571px] w-full divide-y divide-white/5 overflow-y-auto rounded border-2 border-white/20 bg-secondary p-2 shadow-xl"
                >
                   {searchResult.map((movie: any, index) => (
                      <motion.div
                         custom={index}
                         variants={dropdownVariants}
                         key={movie.id}
+                        onClick={() => setIsOpen(false)}
                      >
                         <Link
                            href={`/movie/${movie.id}`}
@@ -80,8 +83,10 @@ export const SearchBar = () => {
                            />
                            <div className="text-[#c9c9c9]">
                               <h2>{movie.title}</h2>
-                              <h3 className="text-sm">{movie.year}</h3>
-                              <h3 className="text-sm">
+                              <h3 className="text-sm text-[#858585]">
+                                 {movie.year}
+                              </h3>
+                              <h3 className="text-sm text-[#858585]">
                                  {movie.genres.length < 3
                                     ? movie.genres.join('/')
                                     : movie.genres.slice(0, 3).join('/')}

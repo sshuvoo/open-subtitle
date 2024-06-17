@@ -1,18 +1,25 @@
-'use client'
-
 import Image from 'next/image'
 import { BackgroundGradient } from '../ui/background-gradient'
 import Link from 'next/link'
 
-export const MovieCard = ({ movie }: { movie: any }) => {
+interface Props {
+   movie: any
+   related?: boolean
+}
+
+export const MovieCard = ({ movie, related }: Props) => {
    const shortTitle =
       movie.title.lenght < 25 ? movie.title : movie.title.slice(0, 22)
    return (
-      <Link href={`/movie/${movie.id}`}>
+      <Link className="w-fit" href={`/movie/${movie.id}`}>
          <BackgroundGradient containerClassName="w-fit">
             <div className="overflow-hidden rounded-md">
                <Image
-                  src={movie.large_cover_image}
+                  src={
+                     related
+                        ? movie.medium_cover_image
+                        : movie.large_cover_image
+                  }
                   alt={movie.title}
                   width={200}
                   height={300}
