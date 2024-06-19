@@ -10,7 +10,7 @@ export default async function Home() {
             <div>
                <h2 className="text-2xl font-light">Popular Downloads</h2>
             </div>
-            <div className="mt-10 grid grid-cols-[auto,auto] justify-between gap-6 md:grid-cols-[auto,auto,auto] lg:grid-cols-[auto,auto,auto,auto] xl:grid-cols-[auto,auto,auto,auto,auto]">
+            <div className="mt-10 grid grid-cols-[auto,auto] justify-evenly gap-6 md:grid-cols-[auto,auto,auto] lg:grid-cols-[auto,auto,auto,auto] xl:grid-cols-[auto,auto,auto,auto,auto]">
                {movies.map((movie: any) => (
                   <MovieCard key={movie.id} movie={movie} />
                ))}

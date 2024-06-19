@@ -11,8 +11,10 @@ export default async function Header() {
       <div className="border-b border-slate-100/20 dark:text-slate-200">
          <div className="container flex h-20 items-center justify-between">
             <div>
-               <Link href="/" className="text-4xl font-extralight text-primary">
-                  OS
+               <Link href="/" className="font-extralight">
+                  <div className="relative rounded bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% p-[3px]">
+                     <div className="h-7 w-7 rounded bg-black"></div>
+                  </div>
                </Link>
             </div>
             <div className="hidden md:block">
