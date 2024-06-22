@@ -12,13 +12,13 @@ const fileValidator = z
       (file) =>
          file.type === 'application/zip' ||
          file.type === 'application/x-zip-compressed',
-      'file must be a .zip file'
+      'File must be a .zip file'
    )
 
 const schema = z.object({
-   title: z.string().min(1, 'title is required'),
-   runtime: z.string().min(1, 'runtime is required'),
-   language: z.string().min(1, 'language is required'),
+   title: z.string().min(1, 'Title is required'),
+   runtime: z.string().min(1, 'Runtime is required'),
+   language: z.string().min(1, 'Language is required'),
    subtitleFile: fileValidator,
 })
 

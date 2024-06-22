@@ -1,6 +1,6 @@
 export const Footer = () => {
    return (
-      <footer className="p-8 text-primary">
+      <footer className="mt-20">
          <div className="container mx-auto grid grid-cols-1 gap-8 md:grid-cols-4">
             {/* About Section */}
             <div>
@@ -80,7 +80,7 @@ export const Footer = () => {
                </p>
             </div>
          </div>
-         <div className="container mx-auto mt-8 border-t border-gray-700 pt-4 text-center">
+         <div className="container mx-auto mt-8 border-t border-gray-700 py-6 text-center">
             <p className="text-sm">
                &copy; {new Date().getFullYear()} OpenSubtitle. All rights
                reserved.

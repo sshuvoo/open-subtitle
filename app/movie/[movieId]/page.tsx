@@ -1,23 +1,22 @@
 import { MovieCard } from '@/components/movie/movie-card'
+import { SubtitleTable } from '@/components/table'
 import { getReletedMovies } from '@/server-actions/get-related-movies'
 import { getSingleMovie } from '@/server-actions/get-single-movie'
-import { YouTubeEmbed } from '@next/third-parties/google'
-import Image from 'next/image'
-import { LiaImdb } from 'react-icons/lia'
-import { FaHeart } from 'react-icons/fa'
-import { FaRegClock } from 'react-icons/fa'
-import { minuteToHour } from '@/utils/minute-to-hour'
-import { IoLanguage } from 'react-icons/io5'
-import { getBase64 } from '@/utils/get-base-64'
-import { notFound } from 'next/navigation'
-import { FiDownload } from 'react-icons/fi'
-import Link from 'next/link'
-import { FiPlusCircle } from 'react-icons/fi'
-import { FaRegBookmark } from 'react-icons/fa'
-import { SiUtorrent } from 'react-icons/si'
-import { ImMagnet } from 'react-icons/im'
+import { getSubtitles } from '@/server-actions/get-subtitles'
 import { syncMongoDatabase } from '@/server-actions/sync-mongo-database'
 import { MovieData } from '@/types/movie'
+import { getBase64 } from '@/utils/get-base-64'
+import { minuteToHour } from '@/utils/minute-to-hour'
+import { YouTubeEmbed } from '@next/third-parties/google'
+import Image from 'next/image'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import { FaHeart, FaRegBookmark, FaRegClock } from 'react-icons/fa'
+import { FiPlusCircle } from 'react-icons/fi'
+import { ImMagnet } from 'react-icons/im'
+import { IoLanguage } from 'react-icons/io5'
+import { LiaImdb } from 'react-icons/lia'
+import { SiUtorrent } from 'react-icons/si'
 
 interface Props {
    params: {
@@ -31,6 +30,7 @@ export default async function MovieDetails({ params }: Props) {
    await syncMongoDatabase(movie)
    const relatedMovies = await getReletedMovies(params.movieId)
    const { base64 } = await getBase64(movie?.large_cover_image)
+   const subtitleGroups = await getSubtitles(movie.imdb_code)
 
    return (
       <div>
@@ -48,26 +48,15 @@ export default async function MovieDetails({ params }: Props) {
                   />
                </div>
                <div className="space-y-4">
-                  <div className="grid grid-cols-[1fr,auto]">
-                     <div className="space-y-1">
-                        <h2 className="text-4xl font-semibold text-white/80">
-                           {movie.title} ({movie.year})
+                  <div className="space-y-1">
+                     <h2 className="text-4xl font-semibold text-white/80">
+                        {movie.title} ({movie.year})
+                     </h2>
+                     {movie?.genres.length > 0 && (
+                        <h2 className="font-medium">
+                           {movie.genres.join('/')}
                         </h2>
-                        {movie?.genres.length > 0 && (
-                           <h2 className="font-medium">
-                              {movie.genres.join('/')}
-                           </h2>
-                        )}
-                     </div>
-                     <div>
-                        <Link
-                           className="flex items-center gap-2 rounded bg-primary px-4 py-2 text-sm text-black"
-                           href={`/add-subtitle?yts_id=${movie.id}&imdb_id=${movie.imdb_code}`}
-                        >
-                           <FiPlusCircle className="text-xl" />
-                           <span>Add Subtitle</span>
-                        </Link>
-                     </div>
+                     )}
                   </div>
                   <div>
                      <h2 className="flex items-center gap-4 text-xl">
@@ -129,11 +118,11 @@ export default async function MovieDetails({ params }: Props) {
                      </div>
                      <div className="flex gap-3">
                         <Link
-                           className="flex items-center justify-center gap-2 rounded bg-primary px-4 py-2 text-sm text-black"
-                           href="/add-subtitle"
+                           className="flex items-center gap-2 rounded bg-primary px-4 py-2 text-sm text-black"
+                           href={`/add-subtitle?yts_id=${movie.id}&imdb_id=${movie.imdb_code}`}
                         >
-                           <FiDownload />
-                           <span>Download Subtitle</span>
+                           <FiPlusCircle className="text-xl" />
+                           <span>Add Subtitle</span>
                         </Link>
                         <Link
                            className="flex items-center justify-center gap-2 rounded border border-primary bg-primary/10 px-4 py-2 text-sm text-primary"
@@ -150,6 +139,17 @@ export default async function MovieDetails({ params }: Props) {
                <h2 className="text-xl font-semibold">Plot summary:</h2>
                <p>{movie.description_full}</p>
             </div>
+            {subtitleGroups.length > 0 && (
+               <div>
+                  {subtitleGroups.map(([language, subtitles]) => (
+                     <SubtitleTable
+                        key={language}
+                        subtitles={subtitles}
+                        language={language}
+                     />
+                  ))}
+               </div>
+            )}
             {movie?.yt_trailer_code && (
                <div>
                   <h2 className="text-xl">Trailer</h2>
