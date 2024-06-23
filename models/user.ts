@@ -15,6 +15,17 @@ const schema = new Schema<User_T>(
          type: String,
          required: true,
       },
+      emailVerified: String,
+      verification: {
+         otp: {
+            type: String,
+            required: true,
+         },
+         expiredAt: {
+            type: Date,
+            required: true,
+         },
+      },
    },
    { timestamps: true }
 )

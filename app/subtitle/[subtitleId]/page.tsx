@@ -12,6 +12,7 @@ import { BsEmojiAngry } from 'react-icons/bs'
 import { BsEmojiFrown } from 'react-icons/bs'
 import { BsEmojiNeutral } from 'react-icons/bs'
 import { BsEmojiSunglasses } from 'react-icons/bs'
+
 interface Props {
    params: {
       subtitleId: string
