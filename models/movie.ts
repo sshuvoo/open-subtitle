@@ -1,22 +1,5 @@
-import { MovieData, Torrent } from '@/types/movie'
+import { MovieData } from '@/types/movie'
 import { Schema, model, models } from 'mongoose'
-
-const torrentSchema = new Schema<Torrent>({
-   url: String,
-   hash: String,
-   quality: String,
-   type: String,
-   is_repack: String,
-   video_codec: String,
-   bit_depth: String,
-   audio_channels: String,
-   seeds: Number,
-   peers: Number,
-   size: String,
-   size_bytes: Number,
-   date_uploaded: String,
-   date_uploaded_unix: Number,
-})
 
 const schema = new Schema<MovieData>({
    id: {
@@ -47,7 +30,6 @@ const schema = new Schema<MovieData>({
    small_cover_image: String,
    medium_cover_image: String,
    large_cover_image: String,
-   torrents: [torrentSchema],
    date_uploaded: String,
    date_uploaded_unix: Number,
 })

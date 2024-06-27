@@ -29,7 +29,18 @@ const schema = new Schema<Subtitle_T>(
          type: String,
          required: true,
       },
+      downloads: Number,
       language: {
+         value: {
+            type: String,
+            required: true,
+         },
+         label: {
+            type: String,
+            required: true,
+         },
+      },
+      message: {
          type: String,
          required: true,
       },

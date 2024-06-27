@@ -4,7 +4,7 @@ export type User_T = {
    name: string
    email: string
    password: string
-   emailVerified?: string
+   emailVerified?: Date
    verification: {
       otp: string
       expiredAt: Date
@@ -20,6 +20,7 @@ export type User_Mongo = {
       otp: string
       expiredAt: Date
    }
+   emailVerified?: string | null
    createdAt: Date
    updatedAt: Date
 }

@@ -1,8 +1,13 @@
 import Link from 'next/link'
 import SigninWithGoogle from '../components/signin-with-google'
 import RegisterForm from './components/register-form'
+import { auth } from '@/auth'
+import { redirect } from 'next/navigation'
 
-export default function Signup() {
+export default async function Signup() {
+   const session = await auth()
+   if (session) redirect('/')
+
    return (
       <div>
          <div className="mx-auto mt-4 w-full max-w-md rounded-none bg-white p-4 shadow-input dark:bg-black md:mt-8 md:rounded-2xl md:p-8 lg:max-w-xl xl:mt-12">

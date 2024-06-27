@@ -7,7 +7,12 @@ export type Subtitle_T = {
    user_id: string | Schema.Types.ObjectId
    title: string
    runtime: string
-   language: string
+   downloads?: number
+   language: {
+      value: string
+      label: string
+   }
+   message: string
    filePath: string
 }
 
@@ -22,7 +27,12 @@ export type Subtitle_Res = {
    }
    title: string
    runtime: string
-   language: string
+   downloads?: number
+   language: {
+      value: string
+      label: string
+   }
+   message: string
    filePath: string
    createdAt: Date
    updatedAt: Date
@@ -39,7 +49,12 @@ export type Subtitle_C = {
    imdb_id: string
    title: string
    runtime: string
-   language: string
+   downloads?: number
+   language: {
+      value: string
+      label: string
+   }
+   message: string
    filePath: string
    createdAt: Date
    updatedAt: Date
@@ -52,9 +67,13 @@ export type Subtitle_G = {
    imdb_id: string
    user_id: Schema.Types.ObjectId
    title: string
-   description: string
    runtime: string
-   language: string
+   message: string
+   downloads?: number
+   language: {
+      value: string
+      label: string
+   }
    filePath: string
    createdAt: Date
    updatedAt: Date

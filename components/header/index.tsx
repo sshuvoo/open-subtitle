@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { MdLogout } from 'react-icons/md'
 import Link from 'next/link'
 import { SearchBar } from './search-bar'
+import avatar from '@/public/assets/images/avatar.jpg'
 
 export default async function Header() {
    const session = await auth()
@@ -21,15 +22,18 @@ export default async function Header() {
                <SearchBar />
             </div>
             <div className="flex items-center gap-3">
-               {session?.user?.image && (
-                  <div className="overflow-hidden rounded-full border-2 border-primary">
+               {session && (
+                  <Link
+                     href="/profile"
+                     className="overflow-hidden rounded-full border-2 border-primary"
+                  >
                      <Image
                         width={30}
                         height={30}
-                        src={session.user.image}
+                        src={session.user?.image ? session.user.image : avatar}
                         alt="avatar"
                      />
-                  </div>
+                  </Link>
                )}
                {session && (
                   <form
@@ -48,7 +52,7 @@ export default async function Header() {
                {!session && (
                   <Link
                      className="rounded bg-primary px-4 py-2 text-sm text-black"
-                     href="/register"
+                     href="/login"
                   >
                      Login/Register
                   </Link>

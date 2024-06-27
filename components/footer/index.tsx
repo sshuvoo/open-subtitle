@@ -8,7 +8,6 @@ export const Footer = () => {
                <p className="text-sm">
                   OpenSubtitle is a platform where people can upload and
                   download subtitles to watch movies in their own language.
-                  Additionally, users can download movies through magnet links.
                </p>
             </div>
 
@@ -73,10 +72,10 @@ export const Footer = () => {
                   Have questions or need support? Feel free to reach out to us.
                </p>
                <p className="mt-2 text-sm">
-                  <strong>Email:</strong> support@opensubtitle.com
+                  <strong>Email:</strong> Sorry, not available right row.
                </p>
                <p className="text-sm">
-                  <strong>Phone:</strong> +1 (234) 567-890
+                  <strong>Phone:</strong> +880 1521-565996
                </p>
             </div>
          </div>

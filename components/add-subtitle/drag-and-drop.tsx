@@ -5,7 +5,7 @@ import { FaRegCheckCircle } from 'react-icons/fa'
 import { ChangeEvent, DragEvent, useRef, useState } from 'react'
 import { byteToKB } from '@/utils/byte-to-killobyte'
 
-export const DragAndDrop = () => {
+export const DragAndDrop = ({ error }: { error?: string }) => {
    const inputRef = useRef<HTMLInputElement>(null)
    const [status, setStatus] = useState<'allowed' | 'not-allowed' | 'idle'>(
       'idle'
@@ -76,14 +76,13 @@ export const DragAndDrop = () => {
          </h3>
          {status === 'idle' && (
             <p className="pointer-events-none text-sm">
-               Drag and drop files here to upload. We can accept only .zip files
-               that are less than 400KB in size.{' '}
+               Drag and drop .zip files less than 400KB in size. <br />
+               <span className="text-sm text-red-500">{error}</span>
             </p>
          )}
          {status === 'not-allowed' && (
             <p className="pointer-events-none text-sm text-red-500">
-               Invalid file format or size. We can accept only .zip files that
-               are less than 400KB in size.
+               Invalid file format or size.
             </p>
          )}
          {status === 'allowed' && (

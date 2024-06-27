@@ -22,20 +22,19 @@ export const SubtitleForm = ({ searchParams, mongo_id }: Props) => {
 
    return (
       <form action={formAction}>
-         <DragAndDrop />
+         <DragAndDrop
+            error={
+               state?.errors?.subtitleFile && state?.errors?.subtitleFile[0]
+            }
+         />
          <div className="w-full max-w-lg">
-            <div className="mt-10 space-y-4">
-               {state?.errors?.subtitleFile && (
-                  <p className="text-xs font-medium text-red-500">
-                     {state?.errors?.subtitleFile[0]}
-                  </p>
-               )}
+            <div className="mt-10">
                <Input
                   placeholder="Title - Avatar.The.Way.Of.Water(2022)[1080p]"
                   name="title"
                />
                {state?.errors?.title && (
-                  <p className="text-xs font-medium text-red-500">
+                  <p className="mt-1 text-xs font-medium text-red-500">
                      {state?.errors?.title[0]}
                   </p>
                )}
@@ -45,17 +44,21 @@ export const SubtitleForm = ({ searchParams, mongo_id }: Props) => {
                <Select options={languages} name="language" />
             </div>
             {state?.errors?.runtime && (
-               <p className="text-xs font-medium text-red-500">
+               <p className="mt-1 text-xs font-medium text-red-500">
                   {state?.errors?.runtime[0]}
                </p>
             )}
-            {state?.errors?.language && (
-               <p className="text-xs font-medium text-red-500">
-                  {state?.errors?.language[0]}
-               </p>
-            )}
             <div className="mt-5">
-               <Textarea rows={3} placeholder="Write a message for audiences" />
+               <Textarea
+                  rows={3}
+                  placeholder="Write a message for audiences"
+                  name="message"
+               />
+               {state?.errors?.message && (
+                  <p className="mt-1 text-xs font-medium text-red-500">
+                     {state?.errors?.message[0]}
+                  </p>
+               )}
             </div>
             <div>
                <input name="yts_id" defaultValue={searchParams.yts_id} hidden />
@@ -71,7 +74,7 @@ export const SubtitleForm = ({ searchParams, mongo_id }: Props) => {
             </div>
             <div>
                {state?.message && (
-                  <p className="text-xs font-medium text-red-500">
+                  <p className="mt-1 text-xs font-medium text-red-500">
                      {state.message}
                   </p>
                )}

@@ -4,7 +4,6 @@ import { dbConnect } from '@/lib/db-connect'
 import { Subtitle } from '@/models/subtitle'
 import { User } from '@/models/user'
 import { Subtitle_Res } from '@/types/subtitle'
-import { groupBy } from '@/utils/groupBy'
 
 export const getSubtitles = async (imdb_id: string) => {
    try {
@@ -12,7 +11,9 @@ export const getSubtitles = async (imdb_id: string) => {
       await User.findById(undefined)
       const buffers: Subtitle_Res[] = await Subtitle.find({ imdb_id })
          .populate('user_id', 'name')
+         .sort({ 'language.label': 1 })
          .lean()
+
       const subLists = buffers.map((sub) => ({
          ...sub,
          _id: sub._id.toString(),
@@ -22,10 +23,7 @@ export const getSubtitles = async (imdb_id: string) => {
             _id: sub.user_id._id.toString(),
          },
       }))
-      const listByLanguage = Object.entries(
-         groupBy(subLists, (item) => item.language)
-      )
-      return listByLanguage
+      return subLists
    } catch (error) {
       console.log(error)
       return []

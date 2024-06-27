@@ -2,19 +2,18 @@
 
 import { dbConnect } from '@/lib/db-connect'
 import { Movie } from '@/models/movie'
-import { MovieData } from '@/types/movie'
 
-export const syncMongoDatabase = async (movie: MovieData) => {
+export const syncMongoDatabase = async (movie: any) => {
+   const { torrents, ...extract } = movie
    try {
       await dbConnect()
       const _id = await Movie.exists({
-         id: movie.id,
-         imdb_code: movie.imdb_code,
+         imdb_code: extract.imdb_code,
       })
       if (_id) {
-         await Movie.findByIdAndUpdate(_id, movie)
+         await Movie.findByIdAndUpdate(_id, extract)
       } else {
-         await Movie.create(movie)
+         await Movie.create(extract)
       }
    } catch (error) {
       console.log(error)

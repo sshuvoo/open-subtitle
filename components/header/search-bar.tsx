@@ -72,7 +72,7 @@ export const SearchBar = () => {
                         onClick={() => setIsOpen(false)}
                      >
                         <Link
-                           href={`/movie/${movie.id}`}
+                           href={`/movie/${movie.imdb_code}`}
                            className="flex gap-2 rounded p-2 hover:bg-white/10"
                         >
                            <Image

@@ -2,13 +2,13 @@
 
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { registerUser } from '@/server-actions/register-user'
+import { loginUser } from '@/server-actions/login-user'
 import { useFormState } from 'react-dom'
 import AuthSubmitButton from '../../components/auth-submit'
 import { LabelInputContainer } from '../../components/labelInput-container'
 
-export default function RegisterForm() {
-   const [state, formAction] = useFormState(registerUser, { message: '' })
+export const LoginForm = () => {
+   const [state, formAction] = useFormState(loginUser, { message: '' })
 
    return (
       <form className="my-8" action={formAction}>
@@ -20,19 +20,7 @@ export default function RegisterForm() {
             </div>
          )}
          <LabelInputContainer
-            error={state?.errors?.name && state.errors.name[0]}
-            className="mb-4"
-         >
-            <Label htmlFor="fullname">Full Name</Label>
-            <Input
-               id="fullname"
-               placeholder="Jack Sparrow"
-               type="text"
-               name="name"
-            />
-         </LabelInputContainer>
-         <LabelInputContainer
-            error={state?.errors?.email && state.errors.email[0]}
+            error={state?.errors?.email && state?.errors?.email[0]}
             className="mb-4"
          >
             <Label htmlFor="email">Email Address</Label>
@@ -44,7 +32,7 @@ export default function RegisterForm() {
             />
          </LabelInputContainer>
          <LabelInputContainer
-            error={state?.errors?.password && state.errors.password[0]}
+            error={state?.errors?.password && state?.errors?.password[0]}
             className="mb-4"
          >
             <Label htmlFor="password">Password</Label>
@@ -55,19 +43,7 @@ export default function RegisterForm() {
                name="password"
             />
          </LabelInputContainer>
-         <LabelInputContainer
-            error={state?.errors?.cPassword && state.errors.cPassword[0]}
-            className="mb-4"
-         >
-            <Label htmlFor="confirmPassword">Confirm Password</Label>
-            <Input
-               id="confirmPassword"
-               placeholder="••••••••"
-               type="password"
-               name="cPassword"
-            />
-         </LabelInputContainer>
-         <AuthSubmitButton title="Sign up" pendingMsg="Submitting..." />
+         <AuthSubmitButton pendingMsg="Connecting..." title="Sign in" />
          <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
       </form>
    )

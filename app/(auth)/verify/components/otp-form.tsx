@@ -5,6 +5,8 @@ import { verifyEmail } from '@/server-actions/verify-otp'
 import { ChangeEvent, useRef } from 'react'
 import AuthSubmitButton from '../../components/auth-submit'
 import LoadingIndicator from './loading-indicator'
+import { useFormState } from 'react-dom'
+import { requestNewOtp } from '@/server-actions/request-otp'
 
 interface Props {
    searchParams: {
@@ -14,20 +16,19 @@ interface Props {
 }
 
 export default function OtpForm({ searchParams }: Props) {
-   // const [otps, setOtps] = useState<string[]>(Array(5).fill(''))
-
    const formRef = useRef<HTMLFormElement>(null)
 
-   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-      // const index =
-      //    Number(e.currentTarget.name[e.currentTarget.name.length - 1]) - 1
-      // setOtps(otps.map((otp, i) => (i === index ? e.currentTarget.value : otp)))
+   const [state, formAction] = useFormState(verifyEmail, { message: '' })
+   const [newOtpState, newOtpAction] = useFormState(requestNewOtp, {
+      message: '',
+   })
 
+   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       if (e.currentTarget.value === '') {
          const sibling =
             e.currentTarget.parentElement?.parentElement?.previousElementSibling
          if (sibling) {
-            const child = sibling.childNodes[0].childNodes[0]
+            const child = sibling.childNodes[0]?.childNodes[0]
             if (child instanceof HTMLInputElement) {
                child.focus()
             }
@@ -36,12 +37,13 @@ export default function OtpForm({ searchParams }: Props) {
          const sibling =
             e.currentTarget.parentElement?.parentElement?.nextElementSibling
          if (sibling) {
-            const child = sibling.childNodes[0].childNodes[0]
+            const child = sibling.childNodes[0]?.childNodes[0]
             if (child instanceof HTMLInputElement) {
                child.focus()
             }
          } else {
             if (formRef.current) {
+               console.log('ggggggg')
                const formData = new FormData(formRef.current)
                const digit1 = formData.get('digit1')
                const digit2 = formData.get('digit2')
@@ -49,6 +51,7 @@ export default function OtpForm({ searchParams }: Props) {
                const digit4 = formData.get('digit4')
                const digit5 = formData.get('digit5')
                if (digit1 && digit2 && digit3 && digit4 && digit5) {
+                  console.log('ggggggg')
                   e.target.form?.requestSubmit()
                }
             }
@@ -56,15 +59,9 @@ export default function OtpForm({ searchParams }: Props) {
       }
    }
 
-   const updatedAction = verifyEmail.bind(null, {
-      otp: `12345`,
-      email: searchParams.email,
-      password: searchParams.password,
-   })
-
    return (
       <>
-         <form ref={formRef} action={updatedAction} className="mt-10">
+         <form ref={formRef} action={formAction} className="mt-10">
             <div className="flex justify-center gap-4">
                <div className="w-fit">
                   <Input
@@ -112,13 +109,55 @@ export default function OtpForm({ searchParams }: Props) {
                   />
                </div>
             </div>
+            <div>
+               <input
+                  type="text"
+                  hidden
+                  defaultValue={searchParams.email}
+                  name="email"
+               />
+               <input
+                  type="text"
+                  hidden
+                  defaultValue={searchParams.password}
+                  name="password"
+               />
+            </div>
             <LoadingIndicator />
+            {state?.message && (
+               <div className="mt-6">
+                  <p className="rounded-md border border-red-500/60 bg-red-500/10 px-4 py-3 text-sm text-red-500">
+                     {state.message}
+                  </p>
+               </div>
+            )}
          </form>
-         <form className="mt-10">
+         <form action={newOtpAction} className="mt-10">
+            <div>
+               <input
+                  type="text"
+                  hidden
+                  defaultValue={searchParams.email}
+                  name="email"
+               />
+               <input
+                  type="text"
+                  hidden
+                  defaultValue={searchParams.password}
+                  name="password"
+               />
+            </div>
             <AuthSubmitButton
                pendingMsg="Requesting..."
                title="Request for new OTP"
             />
+            {newOtpState?.message && (
+               <div className="mt-6">
+                  <p className="border-primary/60 bg-primary/10 text-primary rounded-md border px-4 py-3 text-sm">
+                     {newOtpState.message}
+                  </p>
+               </div>
+            )}
          </form>
       </>
    )

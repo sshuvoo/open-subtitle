@@ -15,7 +15,7 @@ export const SubmitButton = ({ pendingMsg, title }: Props) => {
       <button
          disabled={pending}
          type="submit"
-         className="flex w-full items-center justify-center gap-2 rounded bg-primary py-3 text-sm font-semibold text-black disabled:bg-gray-600"
+         className="flex w-full items-center justify-center gap-2 rounded bg-primary py-2 text-sm font-semibold text-black disabled:bg-gray-600"
       >
          {pending ? (
             <>

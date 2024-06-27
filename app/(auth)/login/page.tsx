@@ -1,18 +1,12 @@
-'use client'
-
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { IconBrandGoogle } from '@tabler/icons-react'
-import { FormEvent } from 'react'
-import { BottomGradient } from '../components/bottom-gradient'
-import { LabelInputContainer } from '../components/labelInput-container'
+import Link from 'next/link'
 import SigninWithGoogle from '../components/signin-with-google'
+import { LoginForm } from './components/login-form'
+import { auth } from '@/auth'
+import { redirect } from 'next/navigation'
 
-export default function SigninForm() {
-   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
-      console.log('Form submitted')
-   }
+export default async function SigninForm() {
+   const session = await auth()
+   if (session) redirect('/')
 
    return (
       <div>
@@ -21,33 +15,18 @@ export default function SigninForm() {
                Contribute to Open Subtitle
             </h2>
             <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
-               Create your account to access and contribute to our extensive
+               Sing in your account to access and contribute to our extensive
                library of high-quality subtitles for movies and TV shows.
             </p>
 
-            <form className="my-8" onSubmit={handleSubmit}>
-               <LabelInputContainer className="mb-4">
-                  <Label htmlFor="email">Email Address</Label>
-                  <Input
-                     id="email"
-                     placeholder="jacksparrow@captain.com"
-                     type="email"
-                  />
-               </LabelInputContainer>
-               <LabelInputContainer className="mb-4">
-                  <Label htmlFor="password">Password</Label>
-                  <Input id="password" placeholder="••••••••" type="password" />
-               </LabelInputContainer>
-               <button
-                  className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-                  type="submit"
-               >
-                  Sign in
-                  <BottomGradient />
-               </button>
-               <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
-            </form>
+            <LoginForm />
             <SigninWithGoogle />
+            <div className="mt-5 flex justify-center gap-1 text-sm">
+               <span>Already have account?</span>
+               <Link className="underline" href="/register">
+                  Sign up
+               </Link>
+            </div>
          </div>
       </div>
    )

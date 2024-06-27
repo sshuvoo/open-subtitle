@@ -11,10 +11,11 @@ export const MovieCard = ({ movie, related }: Props) => {
    const shortTitle =
       movie.title.lenght < 25 ? movie.title : movie.title.slice(0, 22)
    return (
-      <Link className="w-fit" href={`/movie/${movie.id}`}>
+      <Link className="w-fit" href={`/movie/${movie.imdb_code}`}>
          <BackgroundGradient containerClassName="w-fit">
             <div className="overflow-hidden rounded-md">
                <Image
+                  className="h-[225px] w-[150px] md:h-[300px] md:w-[200px]"
                   src={
                      related
                         ? movie.medium_cover_image

@@ -15,8 +15,8 @@ interface Props {
 export default async function AddSubtitle({ searchParams }: Props) {
    const session = await auth()
    if (!session) redirect('/login')
-   const movie: any = await getSingleFromMongo(searchParams.yts_id)
-   if (!movie.title) notFound()
+   const movie: any = await getSingleFromMongo(searchParams.imdb_id)
+   if (!movie?.title) notFound()
    const { base64 } = await getBase64(movie?.large_cover_image)
 
    return (

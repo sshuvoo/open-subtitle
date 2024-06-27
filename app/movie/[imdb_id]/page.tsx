@@ -13,24 +13,22 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { FaHeart, FaRegBookmark, FaRegClock } from 'react-icons/fa'
 import { FiPlusCircle } from 'react-icons/fi'
-import { ImMagnet } from 'react-icons/im'
 import { IoLanguage } from 'react-icons/io5'
 import { LiaImdb } from 'react-icons/lia'
-import { SiUtorrent } from 'react-icons/si'
 
 interface Props {
    params: {
-      movieId: string
+      imdb_id: string
    }
 }
 
 export default async function MovieDetails({ params }: Props) {
-   const movie: MovieData = await getSingleMovie(params.movieId)
+   const movie: MovieData = await getSingleMovie(params.imdb_id)
    if (!movie.title) notFound()
    await syncMongoDatabase(movie)
-   const relatedMovies = await getReletedMovies(params.movieId)
+   const relatedMovies = await getReletedMovies(params.imdb_id)
    const { base64 } = await getBase64(movie?.large_cover_image)
-   const subtitleGroups = await getSubtitles(movie.imdb_code)
+   const subtitles = await getSubtitles(movie.imdb_code)
 
    return (
       <div>
@@ -96,26 +94,11 @@ export default async function MovieDetails({ params }: Props) {
                         <span className="text-white">{movie.language}</span>
                      </h2>
                   </div>
+                  <div>
+                     <h2 className="text-xl font-semibold">Plot summary:</h2>
+                     <p>{movie.description_full}</p>
+                  </div>
                   <div className="space-y-4">
-                     <div className="flex items-center gap-4 text-xl">
-                        <div className="flex items-center gap-2">
-                           <SiUtorrent className="text-[#76b83f]" />
-                           <span>Available Torrent:</span>
-                        </div>
-                     </div>
-                     <div className="flex flex-wrap gap-3">
-                        {movie.torrents.map((torrent: any) => (
-                           <button
-                              className="flex items-center gap-2 rounded border border-transparent bg-sky-500/20 px-4 py-2 text-sm text-sky-500 hover:border-sky-500"
-                              key={torrent.hash}
-                           >
-                              <ImMagnet className="rotate-180" />
-                              <span>
-                                 {torrent.quality} {torrent.type}
-                              </span>
-                           </button>
-                        ))}
-                     </div>
                      <div className="flex gap-3">
                         <Link
                            className="flex items-center gap-2 rounded bg-primary px-4 py-2 text-sm text-black"
@@ -135,19 +118,9 @@ export default async function MovieDetails({ params }: Props) {
                   </div>
                </div>
             </div>
-            <div>
-               <h2 className="text-xl font-semibold">Plot summary:</h2>
-               <p>{movie.description_full}</p>
-            </div>
-            {subtitleGroups.length > 0 && (
+            {subtitles.length > 0 && (
                <div>
-                  {subtitleGroups.map(([language, subtitles]) => (
-                     <SubtitleTable
-                        key={language}
-                        subtitles={subtitles}
-                        language={language}
-                     />
-                  ))}
+                  <SubtitleTable subtitles={subtitles} />
                </div>
             )}
             {movie?.yt_trailer_code && (
