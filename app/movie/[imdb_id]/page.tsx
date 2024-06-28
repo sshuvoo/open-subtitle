@@ -5,7 +5,6 @@ import { getSingleMovie } from '@/server-actions/get-single-movie'
 import { getSubtitles } from '@/server-actions/get-subtitles'
 import { syncMongoDatabase } from '@/server-actions/sync-mongo-database'
 import { MovieData } from '@/types/movie'
-import { getBase64 } from '@/utils/get-base-64'
 import { minuteToHour } from '@/utils/minute-to-hour'
 import { YouTubeEmbed } from '@next/third-parties/google'
 import Image from 'next/image'
@@ -27,7 +26,6 @@ export default async function MovieDetails({ params }: Props) {
    if (!movie.title) notFound()
    await syncMongoDatabase(movie)
    const relatedMovies = await getReletedMovies(params.imdb_id)
-   const { base64 } = await getBase64(movie?.large_cover_image)
    const subtitles = await getSubtitles(movie.imdb_code)
 
    return (
@@ -41,8 +39,6 @@ export default async function MovieDetails({ params }: Props) {
                      width={300}
                      height={450}
                      alt={movie.title}
-                     placeholder="blur"
-                     blurDataURL={base64}
                   />
                </div>
                <div className="space-y-4">

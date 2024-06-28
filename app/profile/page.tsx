@@ -2,10 +2,13 @@ import { auth } from '@/auth'
 import { redirect } from 'next/navigation'
 import avatar from '@/public/assets/images/avatar.jpg'
 import Image from 'next/image'
+import { SubtitleTable } from '@/components/table'
+import { getPrsonalSubtitles } from '@/server-actions/get-personal-subtitles'
 
 export default async function Profile() {
    const session = await auth()
    if (!session) redirect('/login')
+   const subtitles = await getPrsonalSubtitles(session.user.id)
 
    return (
       <div>
@@ -32,8 +35,8 @@ export default async function Profile() {
                   <h3>01521565326</h3>
                </div>
             </div>
-            <div className='mt-5'>
-               <p className='p-3 bg-secondary'>
+            <div className="mt-5">
+               <p className="bg-secondary p-3">
                   John Doe, a web developer with expertise in React and Next.js,
                   excels in creating responsive designs with Tailwind CSS. An
                   active open-source contributor, he enjoys tech blogging,
@@ -41,9 +44,13 @@ export default async function Profile() {
                   platforms.
                </p>
             </div>
-            <div>
-               
-            </div>
+            <div></div>
+            {subtitles.length > 0 && (
+               <div className='mt-10'>
+                  <h2 className='text-2xl'>My Subtitles</h2>
+                  <SubtitleTable subtitles={subtitles} />
+               </div>
+            )}
          </div>
       </div>
    )

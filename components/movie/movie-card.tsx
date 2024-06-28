@@ -13,17 +13,15 @@ export const MovieCard = ({ movie, related }: Props) => {
    return (
       <Link className="w-fit" href={`/movie/${movie.imdb_code}`}>
          <BackgroundGradient containerClassName="w-fit">
-            <div className="overflow-hidden rounded-md">
+            <div className="relative h-[225px] w-[150px] overflow-hidden rounded-md md:h-[300px] md:w-[200px]">
                <Image
-                  className="h-[225px] w-[150px] md:h-[300px] md:w-[200px]"
+                  fill
                   src={
                      related
                         ? movie.medium_cover_image
                         : movie.large_cover_image
                   }
                   alt={movie.title}
-                  width={200}
-                  height={300}
                />
             </div>
          </BackgroundGradient>

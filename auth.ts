@@ -51,26 +51,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }),
    ],
    callbacks: {
-      jwt: ({ token, user, account, profile, session, trigger }) => {
-         // console.log('jwt callback called')
-         // console.log(token)
-         // console.log(user)
-         // console.log(account)
-         // console.log(profile)
-         // console.log(session)
-         // console.log(trigger)
+      jwt: ({ token, user }) => {
          if (user) {
             token.id = user.id
          }
          return token
       },
-      session: ({ session, token, newSession, user, trigger }) => {
-         // console.log('session callback triggered')
-         // console.log(session)
-         // console.log(token)
-         // console.log(newSession)
-         // console.log(user)
-         // console.log(trigger)
+      session: ({ session, token }) => {
          if (token.id) {
             session.user.id = token.id as string
          }
