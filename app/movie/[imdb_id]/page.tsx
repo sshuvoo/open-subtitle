@@ -32,17 +32,26 @@ export default async function MovieDetails({ params }: Props) {
       <div>
          <div className="container mt-20 space-y-8">
             <div className="grid grid-cols-[auto,1fr] gap-8">
+               <div className="col-span-full space-y-1 lg:hidden">
+                  <h2 className="text-4xl font-semibold text-white/80">
+                     {movie.title} ({movie.year})
+                  </h2>
+                  {movie?.genres.length > 0 && (
+                     <h2 className="font-medium">{movie.genres.join('/')}</h2>
+                  )}
+               </div>
                <div className="h-fit w-fit rounded-md bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% p-1">
-                  <Image
-                     className="rounded-md"
-                     src={movie.large_cover_image}
-                     width={300}
-                     height={450}
-                     alt={movie.title}
-                  />
+                  <div className="relative h-60 w-40 md:h-[450px] md:w-[300px]">
+                     <Image
+                        className="rounded-md object-cover object-center"
+                        src={movie.large_cover_image}
+                        fill
+                        alt={movie.title}
+                     />
+                  </div>
                </div>
                <div className="space-y-4">
-                  <div className="space-y-1">
+                  <div className="hidden space-y-1 lg:block">
                      <h2 className="text-4xl font-semibold text-white/80">
                         {movie.title} ({movie.year})
                      </h2>
@@ -56,18 +65,20 @@ export default async function MovieDetails({ params }: Props) {
                      <h2 className="flex items-center gap-4 text-xl">
                         <div className="flex items-center gap-2">
                            <LiaImdb className="text-4xl text-yellow-400" />
-                           <span>Rating</span>
+                           <span className="text-sm md:text-base">Rating</span>
                         </div>
-                        <span className="text-white">{movie.rating}/10</span>
+                        <span className="text-sm text-white md:text-base">
+                           {movie.rating}/10
+                        </span>
                      </h2>
                   </div>
                   <div>
                      <h2 className="flex items-center gap-4 text-xl">
                         <div className="flex items-center gap-2">
                            <FaRegClock className="text-amber-600" />
-                           <span>Runtime</span>
+                           <span className="text-sm md:text-base">Runtime</span>
                         </div>
-                        <span className="text-white">
+                        <span className="text-sm text-white md:text-base">
                            {minuteToHour(movie.runtime)}
                         </span>
                      </h2>
@@ -76,25 +87,31 @@ export default async function MovieDetails({ params }: Props) {
                      <h2 className="flex items-center gap-4 text-xl">
                         <div className="flex items-center gap-2">
                            <FaHeart className="text-primary" />
-                           <span>Likes:</span>
+                           <span className="text-sm md:text-base">Likes:</span>
                         </div>
-                        <span className="text-white">{movie.like_count}</span>
+                        <span className="text-sm text-white md:text-base">
+                           {movie.like_count}
+                        </span>
                      </h2>
                   </div>
                   <div>
                      <h2 className="flex items-center gap-4 text-xl">
                         <div className="flex items-center gap-2">
                            <IoLanguage className="text-purple-500" />
-                           <span>Language:</span>
+                           <span className="text-sm md:text-base">
+                              Language:
+                           </span>
                         </div>
-                        <span className="text-white">{movie.language}</span>
+                        <span className="text-sm text-white md:text-base">
+                           {movie.language}
+                        </span>
                      </h2>
                   </div>
-                  <div>
+                  <div className="hidden lg:block">
                      <h2 className="text-xl font-semibold">Plot summary:</h2>
                      <p>{movie.description_full}</p>
                   </div>
-                  <div className="space-y-4">
+                  <div className="hidden space-y-4 lg:block">
                      <div className="flex gap-3">
                         <Link
                            className="flex items-center gap-2 rounded bg-primary px-4 py-2 text-sm text-black"
@@ -113,9 +130,31 @@ export default async function MovieDetails({ params }: Props) {
                      </div>
                   </div>
                </div>
+               <div className="col-span-full lg:hidden">
+                  <h2 className="text-xl font-semibold">Plot summary:</h2>
+                  <p>{movie.description_full}</p>
+               </div>
+               <div className="col-span-full space-y-4 lg:hidden">
+                  <div className="flex gap-3">
+                     <Link
+                        className="flex items-center gap-2 rounded bg-primary px-4 py-2 text-sm text-black"
+                        href={`/add-subtitle?yts_id=${movie.id}&imdb_id=${movie.imdb_code}`}
+                     >
+                        <FiPlusCircle className="text-xl" />
+                        <span>Add Subtitle</span>
+                     </Link>
+                     <Link
+                        className="flex items-center justify-center gap-2 rounded border border-primary bg-primary/10 px-4 py-2 text-sm text-primary"
+                        href="/add-subtitle"
+                     >
+                        <FaRegBookmark />
+                        <span>Save To Watch Later</span>
+                     </Link>
+                  </div>
+               </div>
             </div>
             {subtitles.length > 0 && (
-               <div>
+               <div className="overflow-x-auto">
                   <SubtitleTable subtitles={subtitles} />
                </div>
             )}
