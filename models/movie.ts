@@ -1,5 +1,12 @@
-import { MovieData } from '@/types/movie'
+import { Cast, MovieData } from '@/types/movie'
 import { Schema, model, models } from 'mongoose'
+
+const castSchema = new Schema<Cast>({
+   imdb_code: Number,
+   name: String,
+   character_name: String,
+   url_small_image: String,
+})
 
 const schema = new Schema<MovieData>({
    id: {
@@ -32,6 +39,7 @@ const schema = new Schema<MovieData>({
    large_cover_image: String,
    date_uploaded: String,
    date_uploaded_unix: Number,
+   cast: [castSchema],
 })
 
 export const Movie = models.Movie || model<MovieData>('Movie', schema)

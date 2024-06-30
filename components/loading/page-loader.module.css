@@ -1,0 +1,25 @@
+.box {
+   --border-size: 4px;
+   --border-angle: -2turn;
+   background-image: conic-gradient(
+      from var(--border-angle),
+      transparent 20%,
+      #6366f1,
+      #03c988
+   );
+   background-position: center center;
+   background-repeat: no-repeat;
+   animation: bg-spin 3s linear infinite;
+}
+
+@keyframes bg-spin {
+   to {
+      --border-angle: 1turn;
+   }
+}
+
+@property --border-angle {
+   syntax: '<angle>';
+   inherits: true;
+   initial-value: 0turn;
+}

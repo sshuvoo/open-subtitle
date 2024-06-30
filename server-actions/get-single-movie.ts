@@ -3,7 +3,7 @@
 export const getSingleMovie = async (imdb_id: string) => {
    try {
       const response = await fetch(
-         `${process.env.MOVIE_DETAILS_API}?imdb_id=${imdb_id}`
+         `${process.env.MOVIE_DETAILS_API}?imdb_id=${imdb_id}&with_cast=true`
       )
       const json = await response.json()
       if (json.status === 'ok') {

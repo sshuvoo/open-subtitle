@@ -23,9 +23,10 @@ interface Props {
 
 export default async function MovieDetails({ params }: Props) {
    const movie: MovieData = await getSingleMovie(params.imdb_id)
-   if (!movie.title) notFound()
+   if (!movie) notFound()
+   if (!movie?.title) notFound()
    await syncMongoDatabase(movie)
-   const relatedMovies = await getReletedMovies(params.imdb_id)
+   const relatedMovies = await getReletedMovies(movie.id)
    const subtitles = await getSubtitles(movie.imdb_code)
 
    return (
@@ -153,9 +154,33 @@ export default async function MovieDetails({ params }: Props) {
                   </div>
                </div>
             </div>
+
             {subtitles.length > 0 && (
                <div className="overflow-x-auto">
                   <SubtitleTable subtitles={subtitles} />
+               </div>
+            )}
+            {movie.cast.length > 0 && (
+               <div>
+                  <h2 className="text-xl">Top Cast</h2>
+                  <div className="mt-5 grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
+                     {movie.cast.map((c) => (
+                        <div key={c.imdb_code} className="flex gap-4">
+                           <div className="relative h-16 w-16">
+                              <Image
+                                 className="rounded-full object-cover object-center"
+                                 src={c.url_small_image}
+                                 fill
+                                 alt={c.name}
+                              />
+                           </div>
+                           <div>
+                              <h2 className="font-medium">{c.name}</h2>
+                              <h3 className="text-sm">as {c.character_name}</h3>
+                           </div>
+                        </div>
+                     ))}
+                  </div>
                </div>
             )}
             {movie?.yt_trailer_code && (

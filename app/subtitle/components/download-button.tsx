@@ -1,7 +1,6 @@
 'use client'
 
 import { requestDownload } from '@/server-actions/request-download'
-import { redirect, useRouter } from 'next/navigation'
 import { useFormStatus } from 'react-dom'
 import { HiOutlineDownload } from 'react-icons/hi'
 import { ImSpinner2 } from 'react-icons/im'
@@ -37,7 +36,6 @@ interface Props {
 }
 
 export const DownloadForm = ({ filePath, sub_id }: Props) => {
-   const router = useRouter()
    const clientAction = async () => {
       try {
          const downloadUrl = await requestDownload(filePath, sub_id)
@@ -50,7 +48,6 @@ export const DownloadForm = ({ filePath, sub_id }: Props) => {
             document.body.removeChild(a)
          }
       } catch (error) {}
-      router.refresh()
    }
 
    return (

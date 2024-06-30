@@ -1,3 +1,10 @@
+export type Cast = {
+   name: string
+   character_name: string
+   url_small_image: string
+   imdb_code: string
+}
+
 export type MovieData = {
    id: number
    url: string
@@ -23,4 +30,5 @@ export type MovieData = {
    large_cover_image: string
    date_uploaded: string
    date_uploaded_unix: number
+   cast: Cast[]
 }

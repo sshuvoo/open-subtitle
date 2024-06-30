@@ -4,6 +4,7 @@ import { MdLogout } from 'react-icons/md'
 import Link from 'next/link'
 import { SearchBar } from './search-bar'
 import avatar from '@/public/assets/images/avatar.jpg'
+import { bebas_neue } from '@/font'
 
 export default async function Header() {
    const session = await auth()
@@ -13,13 +14,20 @@ export default async function Header() {
          <div className="container flex h-20 items-center justify-between">
             <div>
                <Link href="/" className="font-extralight">
-                  <div className="relative rounded bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% p-[3px]">
+                  <div className="relative rounded bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-primary to-90% p-[3px]">
                      <div className="h-7 w-7 rounded bg-black"></div>
                   </div>
                </Link>
             </div>
             <div className="hidden md:block">
                <SearchBar />
+            </div>
+            <div className="md:hidden">
+               <h1
+                  className={`text-2xl font-bold tracking-widest ${bebas_neue.className}`}
+               >
+                  OpenSub
+               </h1>
             </div>
             <div className="flex items-center gap-3">
                {session && (
@@ -34,20 +42,6 @@ export default async function Header() {
                         alt="avatar"
                      />
                   </Link>
-               )}
-               {session && (
-                  <form
-                     action={async () => {
-                        'use server'
-                        await signOut()
-                     }}
-                     className="flex items-center"
-                  >
-                     <button type="submit" className="flex items-center gap-1">
-                        <MdLogout className="text-xl text-red-400" />
-                        <span>Logout</span>
-                     </button>
-                  </form>
                )}
                {!session && (
                   <Link

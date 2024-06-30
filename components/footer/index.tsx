@@ -81,8 +81,7 @@ export const Footer = () => {
          </div>
          <div className="container mx-auto mt-8 border-t border-gray-700 py-6 text-center">
             <p className="text-sm">
-               &copy; {new Date().getFullYear()} OpenSubtitle. All rights
-               reserved.
+               &copy; {new Date().getFullYear()} OpenSub. All rights reserved.
             </p>
          </div>
       </footer>
