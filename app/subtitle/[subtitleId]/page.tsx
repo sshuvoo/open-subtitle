@@ -1,5 +1,5 @@
 import { auth } from '@/auth'
-import avatar from '@/public/assets/images/avatar.jpg'
+import avatar from '@/public/assets/images/avatar.svg'
 import { getContributor } from '@/server-actions/get-contributor'
 import { getReviews } from '@/server-actions/get-reviews'
 import { getSingleFromMongo } from '@/server-actions/get-single-from-mongodb'

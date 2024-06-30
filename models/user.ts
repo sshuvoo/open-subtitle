@@ -16,6 +16,7 @@ const schema = new Schema<User_T>(
          required: true,
       },
       emailVerified: Date,
+      watch_list: [{ type: Schema.Types.ObjectId, ref: 'Movie' }],   
       verification: {
          otp: {
             type: String,

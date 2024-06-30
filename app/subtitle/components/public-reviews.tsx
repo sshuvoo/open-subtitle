@@ -1,5 +1,5 @@
 import SubmitIconButton from '@/components/button/submit-icon-button'
-import avatar from '@/public/assets/images/avatar.jpg'
+import avatar from '@/public/assets/images/avatar.svg'
 import { deleteReview } from '@/server-actions/delete-review'
 import { Review_Mongo } from '@/types/review'
 import moment from 'moment'

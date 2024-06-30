@@ -11,7 +11,6 @@ import { useFormState } from 'react-dom'
 
 interface Props {
    searchParams: {
-      yts_id: string
       imdb_id: string
    }
    mongo_id: string
@@ -61,7 +60,6 @@ export const SubtitleForm = ({ searchParams, mongo_id }: Props) => {
                )}
             </div>
             <div>
-               <input name="yts_id" defaultValue={searchParams.yts_id} hidden />
                <input
                   name="imdb_id"
                   defaultValue={searchParams.imdb_id}

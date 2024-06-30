@@ -3,6 +3,7 @@ import { SubtitleTable } from '@/components/table'
 import { getReletedMovies } from '@/server-actions/get-related-movies'
 import { getSingleMovie } from '@/server-actions/get-single-movie'
 import { getSubtitles } from '@/server-actions/get-subtitles'
+import { saveToWatchList } from '@/server-actions/save-to-watchlist'
 import { syncMongoDatabase } from '@/server-actions/sync-mongo-database'
 import { MovieData } from '@/types/movie'
 import { minuteToHour } from '@/utils/minute-to-hour'
@@ -14,6 +15,8 @@ import { FaHeart, FaRegBookmark, FaRegClock } from 'react-icons/fa'
 import { FiPlusCircle } from 'react-icons/fi'
 import { IoLanguage } from 'react-icons/io5'
 import { LiaImdb } from 'react-icons/lia'
+import WatchLaterSubmit from '../components/watch-later-submit'
+import { auth } from '@/auth'
 
 interface Props {
    params: {
@@ -28,7 +31,13 @@ export default async function MovieDetails({ params }: Props) {
    await syncMongoDatabase(movie)
    const relatedMovies = await getReletedMovies(movie.id)
    const subtitles = await getSubtitles(movie.imdb_code)
-
+   const saveToAction = saveToWatchList.bind(null, movie.imdb_code)
+   const session = await auth()
+   const isWatchlisted =
+      session?.user.watch_list?.some(
+         (item) => item.imdb_code === movie.imdb_code
+      ) || false
+      
    return (
       <div>
          <div className="container mt-20 space-y-8">
@@ -116,18 +125,14 @@ export default async function MovieDetails({ params }: Props) {
                      <div className="flex gap-3">
                         <Link
                            className="flex items-center gap-2 rounded bg-primary px-4 py-2 text-sm text-black"
-                           href={`/add-subtitle?yts_id=${movie.id}&imdb_id=${movie.imdb_code}`}
+                           href={`/add-subtitle?imdb_id=${movie.imdb_code}`}
                         >
                            <FiPlusCircle className="text-xl" />
                            <span>Add Subtitle</span>
                         </Link>
-                        <Link
-                           className="flex items-center justify-center gap-2 rounded border border-primary bg-primary/10 px-4 py-2 text-sm text-primary"
-                           href="/add-subtitle"
-                        >
-                           <FaRegBookmark />
-                           <span>Save To Watch Later</span>
-                        </Link>
+                        <form action={saveToAction}>
+                           <WatchLaterSubmit isWatchlisted={isWatchlisted} />
+                        </form>
                      </div>
                   </div>
                </div>
@@ -139,18 +144,14 @@ export default async function MovieDetails({ params }: Props) {
                   <div className="flex gap-3">
                      <Link
                         className="flex items-center gap-2 rounded bg-primary px-4 py-2 text-sm text-black"
-                        href={`/add-subtitle?yts_id=${movie.id}&imdb_id=${movie.imdb_code}`}
+                        href={`/add-subtitle?imdb_id=${movie.imdb_code}`}
                      >
                         <FiPlusCircle className="text-xl" />
                         <span>Add Subtitle</span>
                      </Link>
-                     <Link
-                        className="flex items-center justify-center gap-2 rounded border border-primary bg-primary/10 px-4 py-2 text-sm text-primary"
-                        href="/add-subtitle"
-                     >
-                        <FaRegBookmark />
-                        <span>Save To Watch Later</span>
-                     </Link>
+                     <form action={saveToAction}>
+                        <WatchLaterSubmit isWatchlisted={isWatchlisted} />
+                     </form>
                   </div>
                </div>
             </div>

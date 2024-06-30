@@ -1,6 +1,6 @@
 import { auth, signOut } from '@/auth'
 import { SubtitleTable } from '@/components/table'
-import avatar from '@/public/assets/images/avatar.jpg'
+import avatar from '@/public/assets/images/avatar.svg'
 import { getPrsonalSubtitles } from '@/server-actions/get-personal-subtitles'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -18,15 +18,13 @@ export default async function Profile() {
       <div>
          <div className="container my-10 lg:my-20">
             <div className="grid grid-cols-[auto,1fr] gap-4">
-               <div className="h-fit w-fit rounded-md bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% p-1">
-                  <div className="relative h-24 w-24">
-                     <Image
-                        className="rounded-md"
-                        src={session.user?.image ? session.user?.image : avatar}
-                        alt={session.user.name || 'Profile Avatar'}
-                        fill
-                     />
-                  </div>
+               <div className="relative h-24 w-24 bg-black">
+                  <Image
+                     className="rounded-md"
+                     src={session.user?.image ? session.user?.image : avatar}
+                     alt={session.user.name || 'Profile Avatar'}
+                     fill
+                  />
                </div>
                <div className="flex justify-between">
                   <div>

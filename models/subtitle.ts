@@ -8,10 +8,6 @@ const schema = new Schema<Subtitle_T>(
          ref: 'Movie',
          required: true,
       },
-      yts_id: {
-         type: String,
-         required: true,
-      },
       imdb_id: {
          type: String,
          required: true,

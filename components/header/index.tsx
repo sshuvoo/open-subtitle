@@ -1,10 +1,9 @@
-import { auth, signOut } from '@/auth'
+import { auth } from '@/auth'
+import { bebas_neue } from '@/font'
+import avatar from '@/public/assets/images/avatar.svg'
 import Image from 'next/image'
-import { MdLogout } from 'react-icons/md'
 import Link from 'next/link'
 import { SearchBar } from './search-bar'
-import avatar from '@/public/assets/images/avatar.jpg'
-import { bebas_neue } from '@/font'
 
 export default async function Header() {
    const session = await auth()
@@ -13,9 +12,14 @@ export default async function Header() {
       <div className="border-b border-slate-100/20 dark:text-slate-200">
          <div className="container flex h-20 items-center justify-between">
             <div>
-               <Link href="/" className="font-extralight">
-                  <div className="relative rounded bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-primary to-90% p-[3px]">
+               <Link href="/" className="flex items-center gap-2">
+                  <div className="relative w-fit rounded bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-primary to-90% p-[3px]">
                      <div className="h-7 w-7 rounded bg-black"></div>
+                  </div>
+                  <div
+                     className={`hidden translate-y-[2px] text-4xl tracking-widest md:block ${bebas_neue.className}`}
+                  >
+                     <h1>penSub</h1>
                   </div>
                </Link>
             </div>
@@ -33,11 +37,11 @@ export default async function Header() {
                {session && (
                   <Link
                      href="/profile"
-                     className="overflow-hidden rounded-full border-2 border-primary"
+                     className="overflow-hidden rounded-full"
                   >
                      <Image
-                        width={30}
-                        height={30}
+                        width={40}
+                        height={40}
                         src={session.user?.image ? session.user.image : avatar}
                         alt="avatar"
                      />

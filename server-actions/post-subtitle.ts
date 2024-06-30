@@ -50,7 +50,6 @@ export const postSubtitle = async (prevState: any, formData: FormData) => {
    const lang_code = languages.find((lang) => lang.value === language)
    if (!lang_code) return { message: 'Invalid Language code' }
    const mongo_id = formData.get('mongo_id')?.toString()!
-   const yts_id = formData.get('yts_id')?.toString()!
    const imdb_id = formData.get('imdb_id')?.toString()!
    const storage = getStorage(firebaseApp)
    const filePath = `${imdb_id}-${session.user?.id}-${Date.now()}.zip`
@@ -61,7 +60,6 @@ export const postSubtitle = async (prevState: any, formData: FormData) => {
       await uploadBytes(subtitleRef, subtitleFile)
       subtitleId = await postSubtitleReference({
          mongo_id,
-         yts_id,
          imdb_id,
          user_id: session.user?.id!,
          title,
